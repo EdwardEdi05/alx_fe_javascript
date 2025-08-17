@@ -44,6 +44,7 @@ async function postQuoteToServer(quote) {
   try {
     const response = await fetch(SERVER_URL, {
       method: "POST",
+      headers: { "Content-Type": "application/json" }
       body: JSON.stringify(quote),
       headers: { "Content-type": "application/json; charset=UTF-8" }
     });
