@@ -55,6 +55,13 @@
     <!-- Notification area -->
 <div id="notification" style="display:none; background:yellow; padding:5px; margin:5px 0;"></div>
 
+<!-- JSON Import/Export Controls -->
+<div>
+  <button onclick="exportToJsonFile()">Export Quotes (JSON)</button>
+  <input type="file" id="importFile" accept=".json" onchange="importFromJsonFile(event)" />
+</div>
+
+
   <script src="script.js"></script>
 
 </body>
