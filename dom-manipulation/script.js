@@ -125,11 +125,12 @@ function showNotification(message) {
 // ------------------------------
 // Page Load
 // ------------------------------
-window.onload = () => {
+document.addEventListener("DOMContentLoaded", () => {
   populateCategories();
   showRandomQuote();
   fetchQuotesFromServer();
 
   // Auto sync every 30s
   setInterval(syncQuotesToServer, 30000);
-};
+});
+
