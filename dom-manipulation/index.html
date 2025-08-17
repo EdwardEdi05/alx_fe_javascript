@@ -41,6 +41,8 @@
 
   <div id="quoteDisplay">Click "Show New Quote" to begin!</div>
   <button id="newQuote">Show New Quote</button>
+  <button onclick="exportQuotes()">Export Quotes</button>
+
 
   <!-- Add New Quote -->
   <h2>Add a New Quote</h2>
@@ -48,9 +50,12 @@
     <input id="newQuoteText" type="text" placeholder="Enter a new quote" />
     <input id="newQuoteCategory" type="text" placeholder="Enter quote category" />
     <button id="addQuote">Add Quote</button>
-    <button onclick="exportQuotes()">Export Quotes</button>
   </div>
 
   <script src="script.js"></script>
+
+  <!-- Notification area -->
+<div id="notification" style="display:none; background:yellow; padding:5px; margin:5px 0;"></div>
+
 </body>
 </html>
