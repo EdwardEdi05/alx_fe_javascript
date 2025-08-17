@@ -7,6 +7,31 @@ let quotes = JSON.parse(localStorage.getItem("quotes")) || [
   { text: "It’s not whether you get knocked down, it’s whether you get up.", author: "Vince Lombardi", category: "Perseverance" },
 ];
 
+// Show a random quote (filtered by category if selected)
+function showRandomQuote() {
+  const selectedCategory = document.getElementById("categoryFilter").value;
+  let filteredQuotes = quotes;
+
+  if (selectedCategory !== "all") {
+    filteredQuotes = quotes.filter(q => q.category === selectedCategory);
+  }
+
+  if (filteredQuotes.length === 0) {
+    document.getElementById("quoteDisplay").innerText = "No quotes in this category.";
+    return;
+  }
+
+  const randomIndex = Math.floor(Math.random() * filteredQuotes.length);
+  const randomQuote = filteredQuotes[randomIndex];
+
+  document.getElementById("quoteDisplay").innerText =
+    `"${randomQuote.text}" — ${randomQuote.author}`;
+}
+
+document.getElementById("newQuote").addEventListener("click", showRandomQuote);
+
+
+
 let currentQuoteIndex = -1;
 
 // =======================
