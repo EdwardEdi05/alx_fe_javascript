@@ -30,6 +30,31 @@ function showRandomQuote() {
 
 document.getElementById("newQuote").addEventListener("click", showRandomQuote);
 
+function addQuote() {
+  const text = document.getElementById("newQuoteText").value.trim();
+  const category = document.getElementById("newQuoteCategory").value.trim();
+
+  if (text && category) {
+    const newQuote = { text, category, author: "User" }; // default author
+    quotes.push(newQuote);
+
+    // Save to localStorage
+    localStorage.setItem("quotes", JSON.stringify(quotes));
+
+    // Clear inputs
+    document.getElementById("newQuoteText").value = "";
+    document.getElementById("newQuoteCategory").value = "";
+
+    // Update dropdown categories dynamically
+    populateCategories();
+
+    // Show success notification
+    document.getElementById("notification").innerText = "Quote added successfully!";
+    setTimeout(() => {
+      document.getElementById("notification").innerText = "";
+    }, 3000);
+  }
+}
 
 
 let currentQuoteIndex = -1;
