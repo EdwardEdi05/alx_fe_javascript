@@ -5,26 +5,55 @@ let quotes = [
   { text: "In the middle of every difficulty lies opportunity.", category: "Wisdom" }
 ];
 
+// Populate categories dynamically
+function populateCategories() {
+  const categoryFilter = document.getElementById("categoryFilter");
+
+  // Extract unique categories from quotes
+  const categories = [...new Set(quotes.map(quote => quote.category))];
+
+  // Reset dropdown
+  categoryFilter.innerHTML = '<option value="all">All Categories</option>';
+
+  categories.forEach(category => {
+    const option = document.createElement("option");
+    option.value = category;
+    option.textContent = category;
+    categoryFilter.appendChild(option);
+  });
+
+  // Restore saved filter from localStorage
+  const savedCategory = localStorage.getItem("selectedCategory");
+  if (savedCategory) {
+    categoryFilter.value = savedCategory;
+    filterQuotes();
+  }
+}
+
+// Filter quotes based on selected category
+function filterQuotes() {
+  const selectedCategory = document.getElementById("categoryFilter").value;
+  localStorage.setItem("selectedCategory", selectedCategory); // Save choice
+  showRandomQuote(); // Refresh quote
+}
+
 // Function: Show a random quote
 function showRandomQuote() {
-  const category = document.getElementById("categoryFilter").value;
-  let filteredQuotes = quotes;
+  const quoteDisplay = document.getElementById("quoteDisplay");
+  const selectedCategory = document.getElementById("categoryFilter").value;
 
-  if (category !== "all") {
-    filteredQuotes = quotes.filter(q => q.category === category);
+  let filteredQuotes = quotes;
+  if (selectedCategory !== "all") {
+    filteredQuotes = quotes.filter(q => q.category === selectedCategory);
   }
 
   if (filteredQuotes.length === 0) {
-    document.getElementById("quoteDisplay").innerHTML = "No quotes available in this category.";
+    quoteDisplay.textContent = "No quotes available in this category.";
     return;
   }
 
   const randomIndex = Math.floor(Math.random() * filteredQuotes.length);
-  const randomQuote = filteredQuotes[randomIndex];
-
-  document.getElementById("quoteDisplay").innerHTML = `
-    "${randomQuote.text}" <div class="category">– ${randomQuote.category}</div>
-  `;
+  quoteDisplay.textContent = filteredQuotes[randomIndex].text;
 }
 
 // Function: Add a new quote
@@ -37,6 +66,10 @@ function addQuote() {
 
   if (newText && newCategory) {
     quotes.push({ text: newText, category: newCategory });
+    quotes.push({ text, category });
+populateCategories(); // ✅ Add this line
+filterQuotes();       // ✅ Refresh displayed quote
+
 
     // Clear inputs
     textInput.value = "";
@@ -107,3 +140,5 @@ document.getElementById("newQuote").addEventListener("click", showRandomQuote);
 createAddQuoteForm();
 populateCategories();
 filterQuotes(); // Show quotes immediately on load
+
+document.addEventListener("DOMContentLoaded", populateCategories);
